@@ -13,9 +13,40 @@ const ChooseGame: React.FC<Props> = ({ onGameStart }) => {
   const [number, setNumber] = useState<number>(2);
   const [playerType, setPlayerType] = useState<PlayerType>('bot');
 
+  
   const handleStartGame = () => {
     if (name && playerType ) {
-      onGameStart(name, number, playerType);
+      const url = "http://127.0.0.1:8000/create_user/";
+const data = {
+  name: name,
+  ip: "123444",
+  port: 0,
+};
+
+fetch(url, {
+  method: "POST",
+  body: JSON.stringify(data),
+  headers: {
+    "Content-Type": "application/json"
+  }
+})
+  .then(response => {
+    if (response.ok) {
+      // Request successful
+      console.log(response.json());
+    } else {
+      // Request failed
+      throw new Error("Error: " + response.status);
+    }
+  })
+  .then(result => {
+    // Process the response
+    console.log(result);
+  })
+  .catch(error => {
+    // Handle any errors
+    console.error(error);
+  })
     }
   };
 
